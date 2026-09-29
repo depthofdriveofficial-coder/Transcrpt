@@ -1,0 +1,26 @@
+name: Get Transcript
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install library
+        run: pip install youtube-transcript-api
+
+      - name: Fetch transcript
+        run: python fetch_transcript.py
+
+      - name: Upload transcript as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: transcript-output
+          path: transcript.txt
